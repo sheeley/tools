@@ -7,12 +7,10 @@ import (
 
 func main() {}
 
-var Data = example{}
+var Data = &data.Comp{}
 
-type example struct{}
-
-func (d *example) Stocks() []*data.Stock {
-	return []*data.Stock{
+func init() {
+	Data.Stock = []*data.Stock{
 		&data.Stock{
 			GrantDate:        human.MustItot(20100101),
 			VestingStartDate: human.MustItot(20100101),
@@ -32,10 +30,8 @@ func (d *example) Stocks() []*data.Stock {
 			StrikePrice:      10,
 		},
 	}
-}
 
-func (d *example) Cash() []*data.Cash {
-	return []*data.Cash{
+	Data.Cash = []*data.Cash{
 		&data.Cash{
 			GrantDate: human.MustItot(20100101),
 			Value:     10000,

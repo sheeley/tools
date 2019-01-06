@@ -2,10 +2,10 @@ package data
 
 import "time"
 
-// Provider is used to separate comp data from the internals
-type Provider interface {
-	Stocks() []*Stock
-	Cash() []*Cash
+// Comp is used to separate comp data from the internals
+type Comp struct {
+	Stock []*Stock
+	Cash  []*Cash
 }
 
 // Stock represents RSUs or Options with
