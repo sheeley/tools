@@ -13,7 +13,6 @@ import (
 
 type Input struct {
 	Verbose bool
-	Plugin  string
 
 	Stocks []*data.Stock
 	Cash   []*data.Cash
