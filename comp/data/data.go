@@ -33,7 +33,7 @@ func (cg *Cash) Payback(t time.Time) float64 {
 		return 0.0
 	}
 
-	diff := t.Sub(cg.GrantDate).Hours() / Year
+	diff := t.Sub(cg.GrantDate).Hours() / float64(Year/time.Hour)
 	if diff > 1 {
 		return 0.0
 	}
@@ -41,4 +41,4 @@ func (cg *Cash) Payback(t time.Time) float64 {
 	return cg.Value * (1.0 - diff)
 }
 
-const Year = 365 * 24
+const Year = 365 * 24 * time.Hour

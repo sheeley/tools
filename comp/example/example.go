@@ -5,6 +5,8 @@ import (
 	"github.com/sheeley/tools/human"
 )
 
+func main() {}
+
 var Data = example{}
 
 type example struct{}
@@ -48,5 +50,3 @@ func (d *example) Cash() []*data.Cash {
 		},
 	}
 }
-
-func main() {}

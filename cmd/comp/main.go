@@ -35,7 +35,7 @@ func main() {
 	in.Cash = prov.Cash()
 	in.Stocks = prov.Stocks()
 	in.Out = os.Stdout
-	in.Date = human.MustItot(20120101)
+	in.Date = human.MustItot(20120201)
 
 	_, err = comp.Comp(in)
 	if err != nil {
