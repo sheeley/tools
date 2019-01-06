@@ -33,3 +33,15 @@ func MustItot(date int) time.Time {
 func Date(t time.Time) string {
 	return t.Format(LayoutOut)
 }
+
+func Ttoi(t time.Time) (int, error) {
+	return strconv.Atoi(t.Format(Layout))
+}
+
+func MustTtoi(t time.Time) int {
+	i, err := Ttoi(t)
+	if err != nil {
+		panic(err)
+	}
+	return i
+}
