@@ -12,7 +12,7 @@ func Int(i int) string {
 }
 
 func Float(f float64) string {
-	return p.Sprintf("%f", f)
+	return p.Sprintf("%.2f", f)
 }
 
 func Dollar(f float64) string {

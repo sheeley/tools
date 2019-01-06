@@ -1,4 +1,4 @@
-package cmd // using cmd rather than main to prevent this from being installed
+package main
 
 import (
 	"flag"

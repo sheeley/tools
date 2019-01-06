@@ -73,7 +73,7 @@ func Mktool(in *Input) (*Output, error) {
 	libDir := path.Join(toolDir, pkg)
 	libFile := path.Join(libDir, strings.ToLower(in.ToolName)+".go")
 
-	cmdDir := path.Join(libDir, "cmd", in.ToolName)
+	cmdDir := path.Join(toolDir, "cmd", in.ToolName)
 	cmdFile := path.Join(cmdDir, "main.go")
 
 	t := &tool{
@@ -82,9 +82,16 @@ func Mktool(in *Input) (*Output, error) {
 	}
 
 	// fmt.Println(libFile, cmdFile, t)
-
 	if exists(libDir) {
 		return nil, errors.New(fmt.Sprintf("package %s exists", pkg))
+	}
+	err = os.MkdirAll(libDir, os.ModePerm)
+	if err != nil {
+		return nil, errs.Wrap(err)
+	}
+
+	if exists(cmdDir) {
+		return nil, errors.New(fmt.Sprintf("tool %s exists", pkg))
 	}
 
 	err = os.MkdirAll(cmdDir, os.ModePerm)

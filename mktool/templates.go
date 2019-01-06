@@ -8,7 +8,6 @@ import (
 	"os"
 	"path"
 	"reflect"
-	"regexp"
 
 	"github.com/richardwilkes/toolbox/errs"
 )
@@ -17,7 +16,6 @@ var (
 	templateMain *template.Template
 	templateLib  *template.Template
 	currPkg      = reflect.TypeOf(tool{}).PkgPath()
-	re           = regexp.MustCompile("package cmd.*")
 )
 
 type tool struct {
@@ -29,9 +27,6 @@ func loadTemplate(name, templatePath string) (*template.Template, error) {
 	if err != nil {
 		return nil, errs.Wrap(err)
 	}
-
-	// main.go: handle the cmd -> main translation
-	b = re.ReplaceAll(b, []byte("package main"))
 
 	// main.go: replace the import
 	b = bytes.Replace(b, []byte(currPkg), []byte(path.Dir(currPkg)), -1)
