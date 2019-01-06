@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -eu # x
+
+echo use aunpack && exit 1

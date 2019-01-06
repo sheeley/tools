@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -eu # x
+
+go install github.com/sheeley/tools/...

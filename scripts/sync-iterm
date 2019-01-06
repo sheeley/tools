@@ -1,0 +1,8 @@
+#! /usr/bin/env bash
+set -eu # x
+
+killall iTerm
+# Kill the prefs deamon to avoid re-syncing of old preferences
+killall cfprefsd
+gackup
+killall cfprefsd

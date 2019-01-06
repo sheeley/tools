@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -eu # x
+
+git fetch && git rebase origin/master

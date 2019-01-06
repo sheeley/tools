@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+set -eu # x
+
+go get -u github.com/rjeczalik/bin/cmd/gobin
+gobin -u

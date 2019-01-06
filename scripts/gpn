@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -eu # x
+
+git push --set-upstream origin "$(git rev-parse --abbrev-ref HEAD)"
