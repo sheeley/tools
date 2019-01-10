@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -eu # x
+
+$EDITOR ~/.config/fish
