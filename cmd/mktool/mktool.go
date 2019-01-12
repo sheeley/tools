@@ -23,11 +23,8 @@ func main() {
 	}
 
 	// if an $EDITOR env var is set, open the enclosing folder, then the cmd file
-	fmt.Print(os.Environ())
 	ed, ok := os.LookupEnv("EDITOR")
-	fmt.Println("editor: ", ed)
 	if ok && ed != "" {
-
 		err = exec.Command(ed, out.ToolDir).Run()
 		if err != nil {
 			fmt.Println(err)
