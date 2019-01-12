@@ -74,7 +74,7 @@ func Mktool(in *Input) (*Output, error) {
 	libFile := path.Join(libDir, strings.ToLower(in.ToolName)+".go")
 
 	cmdDir := path.Join(toolDir, "cmd", in.ToolName)
-	cmdFile := path.Join(cmdDir, "main.go")
+	cmdFile := path.Join(cmdDir, fmt.Sprintf("%s.go", pkg))
 
 	t := &tool{
 		Package:  pkg,
