@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+set -eu # x
+
+if [[ "$1" == "scripts" ]]; then
+    exit 1
+fi
+
+rm -rf "$GOPATH/src/github.com/sheeley/tools/$1"
+rm -rf "$GOPATH/src/github.com/sheeley/tools/cmd/$1"
