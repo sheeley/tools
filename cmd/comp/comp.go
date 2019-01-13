@@ -13,7 +13,9 @@ import (
 
 func main() {
 	in := &comp.Input{}
-	l := &plugins.Loader{}
+	l := &plugins.Loader{
+		Name: "comp",
+	}
 
 	date := human.MustTtoi(time.Now())
 
@@ -22,7 +24,7 @@ func main() {
 	flag.IntVar(&date, "d", date, "date override, YYYYMMDD")
 	flag.Parse()
 
-	p, err := l.Open()
+	p, err := l.CompileAndLoad()
 	if err != nil {
 		panic(err)
 	}

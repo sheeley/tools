@@ -12,13 +12,15 @@ import (
 
 func main() {
 	in := &medicalclaims.Input{}
-	l := &plugins.Loader{}
+	l := &plugins.Loader{
+		Name: "medical-claims",
+	}
 
 	flag.BoolVar(&in.Verbose, "v", false, "verbose logging")
 	flag.StringVar(&l.Path, "p", "claims.so", "Plugin path, required")
 	flag.Parse()
 
-	p, err := l.Open()
+	p, err := l.CompileAndLoad()
 	if err != nil {
 		panic(err)
 	}

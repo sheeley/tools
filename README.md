@@ -3,7 +3,7 @@ A set of golang/bash tools that I use in daily life.
 
 ## Installation
 ```
-go install github.com/sheeley/tools/cmd/...
+go get -u github.com/sheeley/tools/cmd/...
 ```
 
 Additional suggestion, or, simply an instruction, if you're me:
