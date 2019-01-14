@@ -35,7 +35,8 @@ func (l *Loader) CompileAndLoad() (*plugin.Plugin, error) {
 		return nil, errs.Newf("no go files found: %s", goFilePattern)
 	}
 
-	cmd := exec.Command("go", "build", "-buildmode=plugin", "-o", plFile, strings.Join(goFiles, " "))
+	args := append([]string{"build", "-buildmode=plugin", "-o", plFile}, goFiles...)
+	cmd := exec.Command("go", args...)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		return nil, errs.NewWithCause(string(out), err)

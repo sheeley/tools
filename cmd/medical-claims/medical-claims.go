@@ -17,7 +17,11 @@ func main() {
 	}
 
 	flag.BoolVar(&in.Verbose, "v", false, "verbose logging")
-	flag.StringVar(&l.Path, "p", "claims.so", "Plugin path, required")
+	flag.IntVar(&in.Year, "y", 0, "filter claims by year")
+	flag.StringVar(&in.Provider, "provider", "", "filter claims by provider")
+	flag.BoolVar(&data.ShowUUID, "u", false, "show UUIDs for claims")
+	flag.BoolVar(&data.ShowMatches, "m", false, "show potential matches for claims found in CSV without uuid")
+
 	flag.Parse()
 
 	p, err := l.CompileAndLoad()
@@ -53,11 +57,11 @@ func main() {
 		panic("plugin.GroupedClaims is not *data.GroupedClaims")
 	}
 	claims := *pClaims
-	medicalclaims.PrintTable(claims)
 
-	out, err := medicalclaims.MedicalClaims(in)
-	if err != nil {
-		panic(err)
+	claims = medicalclaims.Filter(in, claims)
+	if len(claims) == 0 {
+		fmt.Println("0 claims after filtering")
+		return
 	}
-	fmt.Println(out)
+	medicalclaims.PrintTables(claims)
 }
