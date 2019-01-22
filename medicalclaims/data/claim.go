@@ -26,6 +26,7 @@ type Claim struct {
 	WhatYourPlanPaid float64
 	MyAccountPaid    float64
 	WhatIOwe         float64
+	AllowedAmount    float64
 
 	Source string
 	Match  interface{}

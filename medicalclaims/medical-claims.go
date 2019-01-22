@@ -70,6 +70,7 @@ func PrintTables(claims []*data.Claim) {
 		"Amount Billed",
 		"My Account Paid",
 		"What I Owe",
+		"Amount Allowed",
 		"What Your Plan Paid",
 	}
 	tw.SetHeader(headers)
@@ -109,6 +110,7 @@ func PrintTables(claims []*data.Claim) {
 			human.Float(c.Total()),
 			human.Float(c.MyAccountPaid),
 			human.Float(c.WhatIOwe),
+			human.Float(c.AllowedAmount),
 			human.Float(c.WhatYourPlanPaid),
 		})
 
@@ -129,6 +131,7 @@ func PrintTables(claims []*data.Claim) {
 		human.Float(total.Total()),
 		human.Float(total.MyAccountPaid),
 		human.Float(total.WhatIOwe),
+		human.Float(total.AllowedAmount),
 		human.Float(total.WhatYourPlanPaid),
 	})
 
