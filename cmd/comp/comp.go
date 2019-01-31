@@ -17,7 +17,7 @@ func main() {
 		Name: "comp",
 	}
 
-	date := human.MustTtoi(time.Now())
+	date := human.MustDtoi(time.Now())
 
 	flag.BoolVar(&in.Verbose, "v", false, "verbose logging")
 	flag.StringVar(&l.Path, "p", "comp.so", "Plugin path, required")
