@@ -2,3 +2,7 @@
 set -eu # x
 
 go get github.com/sheeley/tools/cmd/...
+
+if [[ "$PRIVATE_CMD_DIR" != "" ]]; then
+    go get "$PRIVATE_CMD_DIR/..."
+fi
