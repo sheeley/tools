@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/sheeley/tools/medicalclaims"
 	"github.com/sheeley/tools/medicalclaims/data"
@@ -17,7 +18,7 @@ func main() {
 	}
 
 	flag.BoolVar(&in.Verbose, "v", false, "verbose logging")
-	flag.IntVar(&in.Year, "y", 0, "filter claims by year")
+	flag.IntVar(&in.Year, "y", time.Now().Year(), "filter claims by year")
 	flag.StringVar(&in.Provider, "provider", "", "filter claims by provider")
 	flag.BoolVar(&data.ShowUUID, "u", false, "show UUIDs for claims")
 	flag.BoolVar(&data.ShowMatches, "m", false, "show potential matches for claims found in CSV without uuid")
