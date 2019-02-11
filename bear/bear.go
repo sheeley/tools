@@ -25,6 +25,8 @@ func Open(action string, parameters map[string]string) error {
 		u.RawQuery = q.Encode()
 	}
 
+	u.RawQuery = strings.Replace(u.RawQuery, "+", "%20", -1)
+
 	// fmt.Println(u.String())
 	_, err = exec.Command("open", u.String()).CombinedOutput()
 	if err != nil {
