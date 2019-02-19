@@ -10,6 +10,7 @@ type Account struct {
 	Entries   map[time.Time]*Entry
 	Dates     []time.Time
 	Invisible bool // this will hide a specific account without removing it from the total
+	Tags      []string
 }
 
 type AccountConfig func(*Account)

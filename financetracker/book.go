@@ -99,3 +99,18 @@ func (b *Book) Detail(o io.Writer) {
 
 	w.Render()
 }
+
+func (b *Book) ByTag(o io.Writer) {
+	tv := map[string]float64{}
+	for _, acct := range b.Accounts {
+		for _, t := range acct.Tags {
+			tv[t] += float64(acct.CurrentValue())
+		}
+	}
+
+	w := tablewriter.NewWriter(o)
+	for t, v := range tv {
+		w.Append([]string{t, human.Dollar(v)})
+	}
+	w.Render()
+}

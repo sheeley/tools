@@ -15,7 +15,8 @@ func main() {
 	}
 
 	flag.BoolVar(&in.Verbose, "v", false, "verbose logging")
-	flag.BoolVar(&in.Detail, "d", true, "show detail")
+	flag.BoolVar(&in.Detail, "d", false, "show detail")
+	flag.BoolVar(&in.ByTag, "t", true, "show tag summary")
 	flag.BoolVar(&in.Summary, "s", false, "show account summary")
 	flag.Parse()
 
@@ -47,5 +48,9 @@ func main() {
 
 	if in.Summary {
 		fmt.Println(out.Summary)
+	}
+
+	if in.ByTag {
+		fmt.Println(out.ByTag)
 	}
 }
