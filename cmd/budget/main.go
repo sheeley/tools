@@ -6,6 +6,7 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/sheeley/tools/budget"
 	"github.com/sheeley/tools/human"
+	"github.com/sheeley/tools/plugins"
 )
 
 var (
@@ -18,6 +19,27 @@ var (
 )
 
 func main() {
+	l := &plugins.Loader{
+		Name: "budget",
+	}
+
+	p, err := l.CompileAndLoad()
+	if err != nil {
+		panic(err)
+	}
+
+	v, err := p.Lookup("Budget")
+	if err != nil {
+		panic(err)
+	}
+
+	// little ceaser pointer pointer due to plugin
+	prov, ok := v.(**budget.Budget)
+	if !ok {
+		panic("plugin.Budget is not *data.Budget")
+	}
+	b := *prov
+
 	tw := tablewriter.NewWriter(os.Stdout)
 	if showDetails {
 		headers = append(headers, "remaining")
@@ -28,7 +50,7 @@ func main() {
 		separatorRow = append(separatorRow, "====")
 	}
 
-	for _, section := range budget.Sections {
+	for _, section := range b.Sections {
 		if tw.NumLines() > 0 {
 			tw.Append(blankRow)
 		}
@@ -55,7 +77,7 @@ func main() {
 
 	tw.Append(blankRow)
 	tw.Append(separatorRow)
-	totalRow := append([]string{"Total"}, budget.CreateColumns(budget.Salary-remaining)...)
+	totalRow := append([]string{"Total"}, budget.CreateColumns(b.Salary-remaining)...)
 	if showDetails {
 		totalRow = append(totalRow, "")
 		tw.Append(totalRow)

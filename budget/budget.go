@@ -12,6 +12,11 @@ func CreateColumns(d float64) []string {
 	}
 }
 
+type Budget struct {
+	Salary   float64
+	Sections []*Section
+}
+
 type Section struct {
 	Title   string
 	Entries []*Entry

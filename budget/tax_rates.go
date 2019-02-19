@@ -1,7 +1,5 @@
 package budget
 
-import "fmt"
-
 var (
 	StateTaxRates = []*TaxRate{
 		{105224, 9.3, 0},
@@ -29,7 +27,7 @@ func TaxAmount(rates []*TaxRate, incomes ...float64) float64 {
 	for _, r := range rates {
 		if income > r.IncomeFloor {
 			taxRate := r.Rate / 100
-			fmt.Println(taxRate, income)
+			// fmt.Println(taxRate, income)
 			if r.Base == 0 {
 				return taxRate * income
 			}
