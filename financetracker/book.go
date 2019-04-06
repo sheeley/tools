@@ -100,17 +100,30 @@ func (b *Book) Detail(o io.Writer) {
 	w.Render()
 }
 
+type tagSummary struct {
+	current, lastMonth, lastYear float64
+}
+
 func (b *Book) ByTag(o io.Writer) {
-	tv := map[string]float64{}
+	tv := map[string]*tagSummary{}
+	lm := time.Now().Add(-24 * 30 * time.Hour)
+	ly := time.Now().Add(-24 * 365 * time.Hour)
+
 	for _, acct := range b.Accounts {
 		for _, t := range acct.Tags {
-			tv[t] += float64(acct.CurrentValue())
+			if _, ok := tv[t]; !ok {
+				tv[t] = &tagSummary{}
+			}
+			tv[t].current += float64(acct.CurrentValue())
+			tv[t].lastMonth += float64(acct.ValueAt(lm))
+			tv[t].lastYear += float64(acct.ValueAt(ly))
 		}
 	}
 
 	w := tablewriter.NewWriter(o)
+	w.SetHeader([]string{"tag", "ly", "lm", "current"})
 	for t, v := range tv {
-		w.Append([]string{t, human.Dollar(v)})
+		w.Append([]string{t, human.Dollar(v.lastYear), human.Dollar(v.lastMonth), human.Dollar(v.current)})
 	}
 	w.Render()
 }
