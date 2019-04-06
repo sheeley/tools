@@ -49,8 +49,11 @@ type Sieve struct {
 	RuleSets []*RuleSet
 }
 
+const header = `# https://www.fastmail.com/cgi-bin/sievetest.pl
+# require ["fileinto", "reject", "vacation", "notify", "envelope", "body", "relational", "regex", "subaddress", "copy", "mailbox", "mboxmetadata", "servermetadata", "date", "index", "comparator-i;ascii-numeric", "variables", "imap4flags", "editheader", "duplicate", "vacation-seconds"];`
+
 func (s *Sieve) Write(w io.Writer) error {
-	_, err := fmt.Fprintf(w, `# https://www.fastmail.com/cgi-bin/sievetest.pl\n# require ["fileinto", "reject", "vacation", "notify", "envelope", "body", "relational", "regex", "subaddress", "copy", "mailbox", "mboxmetadata", "servermetadata", "date", "index", "comparator-i;ascii-numeric", "variables", "imap4flags", "editheader", "duplicate", "vacation-seconds"];`)
+	_, err := fmt.Fprintf(w, header)
 	if err != nil {
 		return errs.Wrap(err)
 	}
