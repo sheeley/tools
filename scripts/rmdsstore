@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+set -eu # x
+
+# do not put -delete before the filter or bad things will happen
+find . -name .DS_Store -delete
