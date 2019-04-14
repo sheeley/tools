@@ -108,6 +108,7 @@ func (b *Book) ByTag(o io.Writer) {
 	tv := map[string]*tagSummary{}
 	lm := time.Now().Add(-24 * 30 * time.Hour)
 	ly := time.Now().Add(-24 * 365 * time.Hour)
+	total := &tagSummary{}
 
 	for _, acct := range b.Accounts {
 		for _, t := range acct.Tags {
@@ -118,12 +119,26 @@ func (b *Book) ByTag(o io.Writer) {
 			tv[t].lastMonth += float64(acct.ValueAt(lm))
 			tv[t].lastYear += float64(acct.ValueAt(ly))
 		}
+		total.current += float64(acct.CurrentValue())
+		total.lastMonth += float64(acct.ValueAt(lm))
+		total.lastYear += float64(acct.ValueAt(ly))
 	}
 
 	w := tablewriter.NewWriter(o)
-	w.SetHeader([]string{"tag", "ly", "lm", "current"})
+	w.SetHeader([]string{"tag", "-365d", "Δ", "-30d", "Δ", "current"})
 	for t, v := range tv {
-		w.Append([]string{t, human.Dollar(v.lastYear), human.Dollar(v.lastMonth), human.Dollar(v.current)})
+		w.Append([]string{t,
+			human.Dollar(v.lastYear),
+			human.Dollar(v.current - v.lastYear),
+			human.Dollar(v.lastMonth),
+			human.Dollar(v.current - v.lastMonth),
+			human.Dollar(v.current)})
 	}
+	w.Append([]string{"total",
+		human.Dollar(total.lastYear),
+		human.Dollar(total.current - total.lastYear),
+		human.Dollar(total.lastMonth),
+		human.Dollar(total.current - total.lastMonth),
+		human.Dollar(total.current)})
 	w.Render()
 }
