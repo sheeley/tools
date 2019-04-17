@@ -2,35 +2,31 @@ package sievegen
 
 import "fmt"
 
-func Discard(from ...string) *RuleSet {
-	var rules []string
-	for _, f := range from {
-		rules = append(rules, From(f))
-	}
+func Discard(rules ...string) *RuleSet {
 	return &RuleSet{
 		Action: "discard",
 		Rules:  rules,
 	}
 }
 
-func ForwardTo(to string, from ...string) *RuleSet {
+func ForwardTo(to string, rules ...string) *RuleSet {
 	return &RuleSet{
 		Action:   fmt.Sprintf(`redirect :copy "%s"`, to),
-		Rules:    from,
+		Rules:    rules,
 		Continue: true,
 	}
 }
 
-func MoveTo(to string, from ...string) *RuleSet {
+func MoveTo(to string, rules ...string) *RuleSet {
 	return &RuleSet{
 		Action: fmt.Sprintf(`fileinto "INBOX.%s"`, to),
-		Rules:  from,
+		Rules:  rules,
 	}
 }
 
-func KeepInbox(from ...string) *RuleSet {
+func KeepInbox(rules ...string) *RuleSet {
 	return &RuleSet{
 		Action: `fileinto "INBOX"`,
-		Rules:  from,
+		Rules:  rules,
 	}
 }
