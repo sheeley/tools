@@ -29,15 +29,16 @@ func Contains(s string) string {
 }
 
 func To(address string) string {
-	if strings.Contains(address, "*") {
-		return fmt.Sprintf(`header :matches "To" "%s"`, address)
-	}
-	return fmt.Sprintf(`header :contains "To" "%s"`, address)
+	return Header("To", address)
 }
 
 func Subject(s string) string {
+	return Header("Subject", s)
+}
+
+func Header(header, s string) string {
 	if strings.Contains(s, "*") {
-		return fmt.Sprintf(`header :matches "Subject" "%s"`, s)
+		return fmt.Sprintf(`header :matches "%s" "%s"`, header, s)
 	}
-	return fmt.Sprintf(`header :contains "Subject" "%s"`, s)
+	return fmt.Sprintf(`header :contains "%s" "%s"`, header, s)
 }
