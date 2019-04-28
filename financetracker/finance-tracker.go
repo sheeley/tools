@@ -3,11 +3,11 @@ package financetracker
 import "bytes"
 
 type Input struct {
-	Verbose, Detail, Summary, ByTag bool
+	Verbose, Detail, Summary, ByTag, Payment bool
 }
 
 type Output struct {
-	Detail, Summary, ByTag string
+	Detail, Summary, ByTag, Payment string
 }
 
 func FinanceTracker(in *Input, b *Book) (*Output, error) {
@@ -23,6 +23,12 @@ func FinanceTracker(in *Input, b *Book) (*Output, error) {
 		buf.Reset()
 		b.Summary(&buf)
 		o.Summary = buf.String()
+	}
+
+	if in.Payment {
+		buf.Reset()
+		b.Payments(&buf)
+		o.Payment = buf.String()
 	}
 
 	if in.ByTag {

@@ -16,7 +16,8 @@ func main() {
 
 	flag.BoolVar(&in.Verbose, "v", false, "verbose logging")
 	flag.BoolVar(&in.Detail, "d", false, "show detail")
-	flag.BoolVar(&in.ByTag, "t", true, "show tag summary")
+	flag.BoolVar(&in.Payment, "p", false, "show payment details")
+	flag.BoolVar(&in.ByTag, "t", false, "show tag summary")
 	flag.BoolVar(&in.Summary, "s", false, "show account summary")
 	flag.Parse()
 
@@ -40,6 +41,10 @@ func main() {
 	out, err := financetracker.FinanceTracker(in, book)
 	if err != nil {
 		panic(err)
+	}
+
+	if in.Payment {
+		fmt.Println(out.Payment)
 	}
 
 	if in.Detail {

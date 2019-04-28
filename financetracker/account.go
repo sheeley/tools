@@ -11,6 +11,9 @@ type Account struct {
 	Dates     []time.Time
 	Invisible bool // this will hide a specific account without removing it from the total
 	Tags      []string
+
+	PaymentDay    int
+	PaymentAmount float64
 }
 
 type AccountConfig func(*Account)

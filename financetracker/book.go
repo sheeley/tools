@@ -3,6 +3,7 @@ package financetracker
 import (
 	"io"
 	"sort"
+	"strconv"
 	"time"
 
 	"github.com/olekukonko/tablewriter"
@@ -42,6 +43,18 @@ func (b *Book) Dates() []time.Time {
 	})
 
 	return dates
+}
+
+func (b *Book) Payments(o io.Writer) {
+	w := tablewriter.NewWriter(o)
+	w.SetHeader([]string{"Account", "Payment Date", "Payment Value"})
+	for _, a := range b.Accounts {
+		if a.PaymentDay == 0 {
+			continue
+		}
+		w.Append([]string{a.Name, strconv.Itoa(a.PaymentDay), human.Dollar(a.PaymentAmount)})
+	}
+	w.Render()
 }
 
 func (b *Book) Summary(o io.Writer) {
