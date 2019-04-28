@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+set -eu # x
+
+(
+    cd "$TOOLS_DIR"
+    git pull
+)
+
+(
+    cd "$INFRASTRUCTURE_DIR"
+    git pull
+)
