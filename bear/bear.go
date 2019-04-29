@@ -36,3 +36,21 @@ func Open(action string, parameters map[string]string) error {
 	// fmt.Println(string(out))
 	return nil
 }
+
+type Entry struct {
+	Title, Body string
+}
+
+func (e *Entry) Validate() error {
+	if e.Title == "" || e.Body == "" {
+		return errs.New("Title and Body must be set")
+	}
+	return nil
+}
+
+func Create(e *Entry) error {
+	return Open("create", map[string]string{
+		"title": e.Title,
+		"text":  e.Body,
+	})
+}

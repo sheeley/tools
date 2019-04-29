@@ -10,21 +10,31 @@ import (
 )
 
 type Input struct {
-	Verbose bool
-	URLs    []string
+	Verbose         bool
+	CreateBearEntry bool
+	URLs            []string
 }
 
 type Output struct {
+	Results map[string]*Recipe
+}
+
+type Recipe struct {
+	Title string
+	Body  string
 }
 
 func GrabNytimesRecipe(in *Input) (*Output, error) {
-	for _, url := range in.URLs {
-		processUrl(url)
+	o := &Output{
+		Results: make(map[string]*Recipe, len(in.URLs)),
 	}
-	return &Output{}, nil
+	for _, url := range in.URLs {
+		o.Results[url] = processUrl(url)
+	}
+	return o, nil
 }
 
-func processUrl(url string) {
+func processUrl(url string) *Recipe {
 	qIdx := strings.Index(url, "?")
 	if qIdx > -1 {
 		url = url[0:qIdx]
@@ -57,17 +67,19 @@ func processUrl(url string) {
 		instructions = append(instructions, t)
 	})
 
-	fmt.Printf(`
-# %s
-
-## Ingredients
+	template := `## Ingredients
 %s
 
 ## Instructions
 %s
 
 #recipes/not made yet#
-`, title, makeList("+", ingredients), makeList("*", instructions))
+`
+	body := fmt.Sprintf(template, makeList("+", ingredients), makeList("*", instructions))
+	return &Recipe{
+		Title: title,
+		Body:  body,
+	}
 }
 
 func makeList(sep string, entries []string) string {

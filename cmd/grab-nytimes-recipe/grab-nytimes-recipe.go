@@ -4,12 +4,13 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/sheeley/tools/bear"
 	"github.com/sheeley/tools/grabnytimesrecipe"
 )
 
 func main() {
 	in := &grabnytimesrecipe.Input{}
-
+	flag.BoolVar(&in.CreateBearEntry, "b", true, "create Bear entry")
 	flag.BoolVar(&in.Verbose, "v", false, "verbose logging")
 	flag.Parse()
 
@@ -19,5 +20,19 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(out)
+
+	for _, r := range out.Results {
+		if !in.CreateBearEntry {
+			fmt.Println(r.Title + "\n\n" + r.Body)
+			continue
+		}
+
+		err = bear.Create(&bear.Entry{
+			Title: r.Title,
+			Body:  r.Body,
+		})
+		if err != nil {
+			panic(err)
+		}
+	}
 }
