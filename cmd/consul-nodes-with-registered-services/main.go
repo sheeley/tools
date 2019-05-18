@@ -41,6 +41,6 @@ func main() {
 		}
 	}
 
-	fmt.Println("\n", len(nodes))
+	fmt.Printf("\n%d\ttotal\n", len(nodes))
 	svcNodeCount.Print(os.Stdout)
 }
