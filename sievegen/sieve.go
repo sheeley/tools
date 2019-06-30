@@ -104,6 +104,16 @@ func (rs *RuleSet) AndForward(to, from string, rules ...*Rule) *RuleSet {
 	return child
 }
 
+func (r *Rule) And(rules ...*Rule) *Rule {
+	if r.s != "" {
+		r.Children = []*Rule{&Rule{s: r.s, Not: r.Not}}
+	}
+	r.s = ""
+	r.Mode = ModeAll
+	r.Children = append(r.Children, rules...)
+	return r
+}
+
 func (rs *RuleSet) Write(w io.Writer, level int) error {
 	tabs := strings.Repeat("\t", level-1)
 	secondaryTabs := tabs + "\t"
