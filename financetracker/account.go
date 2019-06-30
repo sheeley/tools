@@ -6,6 +6,9 @@ import (
 )
 
 type Account struct {
+	Source      *Account
+	Destination *Account
+
 	Name      string
 	Entries   map[time.Time]*Entry
 	Dates     []time.Time
