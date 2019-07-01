@@ -30,10 +30,6 @@ func From(address string) *Rule {
 	return rule(`address :is "From" "%s"`, address)
 }
 
-func FromContains(address string) *Rule {
-	return rule(`address :contains "From" "%s"`, address)
-}
-
 func Contains(s string) *Rule {
 	return rule(`body :text :contains "%s"`, s)
 }
