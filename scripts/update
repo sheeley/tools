@@ -7,6 +7,6 @@ set -eu # x
 )
 
 (
-    cd "$INFRASTRUCTURE_DIR"
+    cd "$PRIVATE_TOOLS_DIR"
     git pull
 )
