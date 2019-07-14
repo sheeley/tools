@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 set -eu
 
-FILE="$GOPATH/src/github.com/sheeley/tools/scripts/$1"
+FILE="$TOOLS_DIR/scripts/$1"
 
 if [[ -f "$FILE" ]]; then
     echo "script exists"
@@ -18,6 +18,6 @@ EOD
 chmod +x "$FILE"
 
 # first, open code for the full repo
-code "$GOPATH/src/github.com/sheeley/tools/"
+# $EDITOR "$GOPATH/src/github.com/sheeley/tools/"
 # then open the file within that window
-code "$FILE"
+$EDITOR "$FILE"

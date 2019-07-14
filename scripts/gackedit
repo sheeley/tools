@@ -1,4 +1,4 @@
 #! /usr/bin/env bash
 set -eu # x
 
-code "$HOME/Documents/config/.gackup"
+$EDITOR "$HOME/.gackup"
