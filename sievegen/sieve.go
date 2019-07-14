@@ -106,7 +106,7 @@ func (rs *RuleSet) AndForward(to, from string, rules ...*Rule) *RuleSet {
 
 func (r *Rule) And(rules ...*Rule) *Rule {
 	if r.s != "" {
-		r.Children = []*Rule{&Rule{s: r.s, Not: r.Not}}
+		r.Children = []*Rule{{s: r.s, Not: r.Not}}
 	}
 	r.s = ""
 	r.Mode = ModeAll
