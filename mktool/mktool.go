@@ -55,17 +55,16 @@ func Mktool(in *Input) (*Output, error) {
 	if in.ToolName == "" {
 		return nil, errs.New("must include a tool name")
 	}
-	gp, ok := os.LookupEnv("GOPATH") // TODO: maybe? build.Default.GOPATH
+
+	toolDir, ok := os.LookupEnv("TOOLS_DIR")
 	if !ok {
-		return nil, errors.New("$GOPATH not set")
+		return nil, errors.New("$TOOLS_DIR not set")
 	}
 
 	err := setTemplates()
 	if err != nil {
 		return nil, errs.Wrap(err)
 	}
-
-	toolDir := path.Join(gp, "src/github.com/sheeley/tools/")
 
 	cleaned := clean(in.ToolName)
 	pkg := strings.ToLower(cleaned)
