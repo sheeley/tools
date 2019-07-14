@@ -10,3 +10,6 @@ set -eu # x
     cd "$PRIVATE_TOOLS_DIR"
     git pull
 )
+
+brew bundle install --file="$PRIVATE_TOOLS_DIR/config/Brewfile"
+
