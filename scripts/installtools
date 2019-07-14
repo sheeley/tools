@@ -6,7 +6,7 @@ go get github.com/sheeley/tools/cmd/...
 if [[ "$PRIVATE_CMD_DIR" != "" ]]; then
     (
         cd "$PRIVATE_CMD_DIR"
-        git pull
+        # git pull
         go install ./...
     )
 fi
