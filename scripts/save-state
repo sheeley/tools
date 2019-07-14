@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+set -eu # x
+
+check_status () {
+	if [[ $(git status --porcelain=v2) != "" ]]; then
+		git status
+	fi
+}
+
+(
+	cd "$TOOLS_DIR"
+	check_status
+)
+
+(
+	cd "$PRIVATE_TOOLS_DIR/config"
+	brew bundle dump -f
+	cd ..
+	
+	check_status
+)
