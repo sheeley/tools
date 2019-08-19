@@ -124,22 +124,16 @@ var activities = []*Activity{
 			"Cash",
 			"Day pack",
 			"Sunglasses",
-			"Pillow",
-			"Duct tape",
-			"Insect repellant",
-			"Pillow",
 		),
 	},
 	{
 		Name: "Electronics",
 		Items: items(
 			"Headphones",
-			"Kindle",
 			"Flashlight",
 			"Phone Charger",
 			"Watch Charger",
-			"USB Hub",
-			"USB C cable",
+			"USB Multi Charger",
 			"Book/Kindle",
 		),
 	},
@@ -156,7 +150,10 @@ var activities = []*Activity{
 			"Floss",
 			"Deodorant",
 			"Sunscreen",
-			"Hand sanitizer",
+		),
+	}, {
+		Name: "Misc",
+		Items: items("Hand sanitizer",
 			"Medicine",
 			"First-aid kit",
 			"Plastic baggies",
@@ -164,24 +161,41 @@ var activities = []*Activity{
 			"Clothesline",
 			"Tissues",
 			"Sewing kit",
+			"Duct tape",
+			"Insect repellant",
+			"Packable duffel bag",
 		),
 	},
 
 	{
-		Name:  "Clothing",
-		Items: items("Pants 2", "Shirts 5", "Jacket", "Underwear 5", "Socks 5", "Sweater", "Sleepwear", "Shoes/Boots", "Sandals", "Swimsuit", "Towel"),
+		Name: "Clothing",
+		Items: items(
+			"Laundry Bag",
+			"Pants/Shorts 2",
+			"Shirts 5",
+			"Jacket",
+			"Underwear 5",
+			"Socks 5",
+			"Sweater",
+			"Sleepwear",
+			"Shoes/Boots",
+		),
 	},
 
-	act("Formal event", check, subItems("Suit", "Tie", "Formal shoes")),
+	act("Swimming", check, subItems("swimsuit", "sandals", "rash/uv guard", "beach towel")),
+	act("Formal event", check, subItems("Suit", "Tie", "Formal shoes", "Belt", "Collar stays")),
 
 	act("Laptop", check, subItems("charger")),
 
 	{
 		Name:  "International",
 		Check: true,
-		Items: items("Passport", "Power adapter"),
+		Items: items("Passport", "Power adapter", "Pillow"),
 	},
-
+	{
+		Name:  "Exercise",
+		Items: items("rubber band", "trx", "lax ball", "stretch stick", "gym shorts", "gym shirts", "gym underwear", "gym shoes"),
+	},
 	act("Camping", check, subs(
 		&Activity{
 			Name:  "Camp",
