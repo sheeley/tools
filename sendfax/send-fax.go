@@ -15,7 +15,7 @@ import (
 )
 
 type Input struct {
-	Verbose                                       bool
+	Verbose, Wait                                 bool
 	AccountSID, AuthToken, From, To, File, Bucket string
 }
 
@@ -58,14 +58,51 @@ func SendFax(in *Input, sess *session.Session) (*Output, error) {
 	}
 
 	fr, ex, err := twilio.SendFax(in.To, in.From, mediaURL, "standard", "", false)
-	if err != nil {
-		return nil, errs.Wrap(err)
-	}
 	if ex != nil {
 		return nil, errs.New(ex.Error())
 	}
+	if err != nil {
+		return nil, errs.Wrap(err)
+	}
+
+	status := fr.Status
+	if in.Verbose {
+		fmt.Printf("enqueued: %s\t%s\n", fr.Sid, fr.Status)
+	}
+
+	if in.Wait {
+		faxSID := fr.Sid
+		maxAttempts := 20
+		attempts := 0
+
+		for {
+			if attempts > maxAttempts {
+				break
+			}
+
+			time.Sleep(30 * time.Second)
+			if in.Verbose {
+				fmt.Printf("checking status: %d\n", attempts)
+			}
+
+			f, ex, err := twilio.GetFax(faxSID)
+			if ex != nil {
+				return nil, errs.New(ex.Error())
+			}
+			if err != nil {
+				return nil, errs.Wrap(err)
+			}
+
+			if f.Status != "sending" {
+				status = f.Status
+				break
+			}
+
+			attempts += 1
+		}
+	}
 
 	return &Output{
-		Status: fr.Status,
+		Status: status,
 	}, nil
 }
