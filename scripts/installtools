@@ -1,7 +1,11 @@
 #! /usr/bin/env bash
 set -eu # x
 
-go get github.com/sheeley/tools/cmd/...
+# go get github.com/sheeley/tools/cmd/...
+(
+    cd "$TOOLS_DIR"
+    go install ./cmd/...
+)
 
 if [[ "$PRIVATE_CMD_DIR" != "" ]]; then
     (
