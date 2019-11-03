@@ -39,18 +39,18 @@ func loadTemplate(name, templatePath string) (*template.Template, error) {
 }
 
 func setTemplates() error {
-	gp, ok := os.LookupEnv("GOPATH") // TODO: maybe? build.Default.GOPATH
+	gp, ok := os.LookupEnv("TOOLS_DIR") // TODO: maybe? build.Default.GOPATH
 	if !ok {
-		return errors.New("$GOPATH not set")
+		return errors.New("$TOOLS_DIR not set")
 	}
 
 	var err error
-	templateLib, err = loadTemplate("lib", path.Join(gp, "src", currPkg, "samplepkg/sample.go"))
+	templateLib, err = loadTemplate("lib", path.Join(gp, "mktool", "samplepkg", "sample.go"))
 	if err != nil {
 		return errs.Wrap(err)
 	}
 
-	templateMain, err = loadTemplate("main", path.Join(gp, "src", currPkg, "samplepkg/cmd/main.go"))
+	templateMain, err = loadTemplate("main", path.Join(gp, "mktool", "samplepkg", "cmd", "main.go"))
 	if err != nil {
 		return errs.Wrap(err)
 	}
