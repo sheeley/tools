@@ -130,6 +130,7 @@ var activities = []*Activity{
 		Name: "Electronics",
 		Items: items(
 			"Headphones",
+			"Kindle",
 			"Flashlight",
 			"Phone Charger",
 			"Watch Charger",
@@ -183,7 +184,7 @@ var activities = []*Activity{
 	},
 
 	act("Swimming", check, subItems("swimsuit", "sandals", "rash/uv guard", "beach towel")),
-	act("Formal event", check, subItems("Suit", "Tie", "Formal shoes", "Belt", "Collar stays")),
+	act("Formal event", check, subItems("Suit", "Tie", "Button up shirt(s)", "Formal shoes", "Belt", "Collar stays")),
 
 	act("Laptop", check, subItems("charger")),
 
