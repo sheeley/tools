@@ -1,4 +1,4 @@
 #! /usr/bin/env bash
 set -eu # x
 
-go run ./*.go
+go run ./*.go $@
