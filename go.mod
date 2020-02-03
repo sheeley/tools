@@ -8,7 +8,9 @@ require (
 	github.com/aws/aws-sdk-go v1.19.46
 	github.com/bitfield/script v0.10.0
 	github.com/hashicorp/consul/api v1.1.0
+	github.com/jmoiron/sqlx v1.2.0
 	github.com/mattn/go-runewidth v0.0.4 // indirect
+	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/olekukonko/tablewriter v0.0.1
 	github.com/richardwilkes/toolbox v1.8.0
 	github.com/sergi/go-diff v1.0.0
