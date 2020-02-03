@@ -1,11 +1,11 @@
 package packinglist
 
 import (
-	"bufio"
 	"fmt"
 	"io"
-	"os"
 	"strings"
+
+	"github.com/sheeley/tools/input"
 )
 
 type Input struct {
@@ -26,13 +26,11 @@ func PackingList(in *Input) (string, error) {
 var answers = map[string]bool{}
 
 func query(s string) bool {
-	// fmt.Println("query " + s)
 	if a, ok := answers[s]; ok {
 		return a
 	}
 	fmt.Print(s + " [y/N] ")
-	reader := bufio.NewReader(os.Stdin)
-	char, _, err := reader.ReadRune()
+	char, err := input.ReadChar()
 	if err != nil {
 		panic(err)
 	}
