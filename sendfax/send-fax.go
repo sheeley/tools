@@ -2,9 +2,12 @@ package sendfax
 
 import (
 	"fmt"
+	"io/ioutil"
 	"math/rand"
+	"net/http"
 	"os"
 	"path/filepath"
+	"sync"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -15,8 +18,8 @@ import (
 )
 
 type Input struct {
-	Verbose, Wait, DeleteAfterSend                bool
-	AccountSID, AuthToken, From, To, File, Bucket string
+	Verbose, Wait, DeleteAfterSend                          bool
+	AccountSID, AuthToken, From, To, File, Bucket, HttpAddr string
 }
 
 type Output struct {
@@ -93,7 +96,53 @@ func SendFax(in *Input, sess *session.Session) (*Output, error) {
 		fmt.Printf("media URL: %s\n", mediaURL)
 	}
 
-	fr, ex, err := twilio.SendFax(in.To, in.From, mediaURL, "fine", "", false)
+	status := "unsent"
+	callback := ""
+	var wg sync.WaitGroup
+	if in.HttpAddr != "" {
+		callback = fmt.Sprintf("%s/twilio", in.HttpAddr)
+		wg.Add(1)
+		go func() {
+			http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
+				sig := req.Header.Get("X-Twilio-Signature")
+				// TODO: validate sig
+				if in.Verbose {
+					fmt.Println("http", sig)
+				}
+
+				defer req.Body.Close()
+				b, readErr := ioutil.ReadAll(req.Body)
+				if readErr != nil {
+					err = errs.Wrap(readErr)
+					return
+				}
+
+				parseErr := req.ParseForm()
+				if parseErr != nil {
+					fmt.Println(string(b))
+					err = errs.Wrap(parseErr)
+					return
+				}
+
+				status = req.Form.Get("Status")
+				if status != "success" {
+					fmt.Println(string(b))
+					cd := req.Form.Get("ErrorCode")
+					msg := req.Form.Get("ErrorMessage")
+					err = fmt.Errorf("%s: %s", cd, msg)
+				}
+				wg.Done()
+			})
+
+			err2 := http.ListenAndServe(":8080", nil)
+			if err2 != nil {
+				fmt.Printf("%s - unabled to start http server\n", err)
+				wg.Done()
+				in.HttpAddr = ""
+			}
+		}()
+	}
+	fr, ex, err := twilio.SendFax(in.To, in.From, mediaURL, "fine", callback, false)
 	if ex != nil {
 		return nil, errs.New(ex.Error())
 	}
@@ -101,13 +150,17 @@ func SendFax(in *Input, sess *session.Session) (*Output, error) {
 		return nil, errs.Wrap(err)
 	}
 
-	status := fr.Status
+	status = fr.Status
 	if in.Verbose {
 		fmt.Printf("enqueued: %s\t%s\n", fr.Sid, fr.Status)
 	}
 
 	if in.Wait {
 		status, err = WaitUntilSent(twilio, fr.Sid, in.Verbose)
+	}
+
+	if in.HttpAddr != "" {
+		wg.Wait()
 	}
 
 	if in.DeleteAfterSend {
