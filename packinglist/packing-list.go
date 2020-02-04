@@ -58,7 +58,7 @@ func (a *Activity) Write(w io.Writer, l int) {
 		pre = "\n"
 	}
 	pre += strings.Repeat("\t", l)
-	w.Write([]byte(pre + "[ ] " + a.Name + "\n"))
+	_, _ = w.Write([]byte(pre + "[ ] " + a.Name + "\n"))
 
 	for _, i := range a.Items {
 		if i.Active() {

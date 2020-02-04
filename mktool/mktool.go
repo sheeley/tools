@@ -82,7 +82,7 @@ func Mktool(in *Input) (*Output, error) {
 
 	// fmt.Println(libFile, cmdFile, t)
 	if exists(libDir) {
-		return nil, errors.New(fmt.Sprintf("package %s exists", pkg))
+		return nil, errs.Newf("package %s exists", pkg)
 	}
 	err = os.MkdirAll(libDir, os.ModePerm)
 	if err != nil {
@@ -90,7 +90,7 @@ func Mktool(in *Input) (*Output, error) {
 	}
 
 	if exists(cmdDir) {
-		return nil, errors.New(fmt.Sprintf("tool %s exists", pkg))
+		return nil, errs.Newf("tool %s exists", pkg)
 	}
 
 	err = os.MkdirAll(cmdDir, os.ModePerm)
