@@ -4,11 +4,11 @@ set -eu
 FILE="$TOOLS_DIR/scripts/$1"
 
 if [[ -f "$FILE" ]]; then
-    echo "script exists"
-    exit 1
+	echo "script exists"
+	exit 1
 fi
 
-cat <<EOD >> "$FILE"
+cat <<EOD >>"$FILE"
 #! /usr/bin/env bash
 set -eu # x
 

@@ -6,8 +6,7 @@ set -eu
 ENVGROUP=anadev
 fanauth aws -g "$ENVGROUP" -w
 SERVICES='iamg   iamgm  iamgp  iamip  iamp   iampa  iamr   iamrp  iamu   iamup' #  s3 r53r r53z'
-for SERVICE in $SERVICES
-do
-    echo "$SERVICE"
-    AWS_REGION=us-east-1 terraforming "$SERVICE" --profile "$ENVGROUP"
+for SERVICE in $SERVICES; do
+	echo "$SERVICE"
+	AWS_REGION=us-east-1 terraforming "$SERVICE" --profile "$ENVGROUP"
 done

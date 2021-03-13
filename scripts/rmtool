@@ -2,7 +2,7 @@
 set -eu # x
 
 if [[ "$1" == "scripts" ]]; then
-    exit 1
+	exit 1
 fi
 
 rm -rf "$GOPATH/src/github.com/sheeley/tools/$1"

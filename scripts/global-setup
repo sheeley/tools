@@ -1,12 +1,11 @@
 #! /usr/bin/env bash
 set -eu # x
 
-
 # add screenshot dir, set folder, add to dock
 mkdir -p ~/Screenshots
 defaults write com.apple.screencapture location ~/Screenshots
 killall SystemUIServer
 if ! defaults read com.apple.dock persistent-others | grep Screenshots; then
-    defaults write com.apple.dock persistent-others -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file:///$HOME/Screenshots</string><key>_CFURLStringType</key><integer>15</integer></dict></dict><key>tile-type</key><string>directory-tile</string></dict>"
-    killall Dock
+	defaults write com.apple.dock persistent-others -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>file:///$HOME/Screenshots</string><key>_CFURLStringType</key><integer>15</integer></dict></dict><key>tile-type</key><string>directory-tile</string></dict>"
+	killall Dock
 fi

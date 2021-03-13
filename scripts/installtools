@@ -3,14 +3,14 @@ set -eu # x
 
 # go get github.com/sheeley/tools/cmd/...
 (
-    cd "$TOOLS_DIR"
-    go install ./cmd/...
+	cd "$TOOLS_DIR"
+	go install ./cmd/...
 )
 
 if [[ "$PRIVATE_CMD_DIR" != "" ]]; then
-    (
-        cd "$PRIVATE_CMD_DIR"
-        # git pull
-        go install ./...
-    )
+	(
+		cd "$PRIVATE_CMD_DIR"
+		# git pull
+		go install ./...
+	)
 fi
