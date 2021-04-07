@@ -1,6 +1,0 @@
-#! /usr/bin/env bash
-set -eu # x
-
-git add -u .
-git commit --amend --no-edit
-gpf

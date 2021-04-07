@@ -1,4 +1,0 @@
-#! /usr/bin/env bash
-set -eu # x
-
-git push --force-with-lease

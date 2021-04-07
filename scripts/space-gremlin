@@ -1,4 +1,0 @@
-#! /usr/bin/env bash
-set -eu # x
-
-sudo /Applications/Space\ Gremlin\ Pro.app/Contents/MacOS/Space\ Gremlin\ Pro
