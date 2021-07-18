@@ -130,7 +130,7 @@ func WriteNotes(in *Input, notes []*Note) error {
 		}
 		return nil
 	}
-
+	fmt.Printf("Writing %d notes", len(notes))
 	for _, n := range notes {
 		fp := filepath.Join(in.Outdir, n.ID+".json")
 		err = encode(fp, n, in.Verbose)
@@ -149,9 +149,14 @@ func encode(fp string, data interface{}, verbose bool) error {
 	if err != nil {
 		return errs.Wrap(err)
 	}
+	defer f.Close()
 	err = json.NewEncoder(f).Encode(data)
 	if err != nil {
 		return errs.Wrap(err)
 	}
+	// if verbose {
+	// 	fmt.Printf("closing %s\n", fp)
+	// }
+	// f.Close()
 	return nil
 }
