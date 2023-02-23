@@ -16,6 +16,6 @@ require (
 	github.com/sfreiberg/gotwilio v0.0.0-20191023035553-f6f740c7bffc
 	github.com/sheeley/counter v0.0.0-20190608163013-ecc6cd77e755
 	github.com/stretchr/testify v1.3.0
-	golang.org/x/text v0.3.2
+	golang.org/x/text v0.3.8
 	google.golang.org/appengine v1.6.7 // indirect
 )
